@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500;600;700&family=Marcellus&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+  }
+
+  body {
+    @apply m-0 p-0 font-body antialiased;
+    background-color: #010202;
+    color: #A89048;
+    overflow-x: hidden;
+  }
+
+  /* Smooth scrolling for all browsers */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+  }
+
+  h2 {
+    font-size: clamp(2rem, 4vw, 3rem);
+  }
+
+  h3 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+  }
+
+  p {
+    font-size: clamp(1rem, 2vw, 1.125rem);
+  }
+}
+
+@layer components {
+  .gold-glow {
+    box-shadow: 0 0 20px rgba(140, 114, 49, 0.3),
+                0 0 40px rgba(140, 114, 49, 0.2);
+  }
+
+  .teal-glow {
+    box-shadow: 0 0 20px rgba(54, 82, 101, 0.4),
+                0 0 40px rgba(54, 82, 101, 0.2);
+  }
+
+  .card-elevation {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3),
+                0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Tree-inspired organic patterns */
+  .tree-texture {
+    background-image: 
+      radial-gradient(circle at 20% 50%, rgba(140, 114, 49, 0.03) 1px, transparent 1px),
+      radial-gradient(circle at 80% 80%, rgba(54, 82, 101, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+  }
+
+  .branch-pattern {
+    background-image: 
+      linear-gradient(45deg, transparent 48%, rgba(140, 114, 49, 0.05) 49%, rgba(140, 114, 49, 0.05) 51%, transparent 52%),
+      linear-gradient(-45deg, transparent 48%, rgba(54, 82, 101, 0.05) 49%, rgba(54, 82, 101, 0.05) 51%, transparent 52%);
+    background-size: 100px 100px;
+  }
+
+  /* Mystical glow effects */
+  .mystical-glow {
+    position: relative;
+  }
+
+  .mystical-glow::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, #8C7231, #365265, #8C7231);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: -1;
+    filter: blur(10px);
+  }
+
+  .mystical-glow:hover::before {
+    opacity: 0.3;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .bg-gradient-radial {
+    background: radial-gradient(circle, var(--tw-gradient-stops));
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
