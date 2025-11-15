@@ -51,7 +51,7 @@ Thumbs.db
 
 # MongoDB
 *.mongodb
-*.md
+
 
 # Package manager lock files (optional - uncomment if needed)
 # package-lock.json
