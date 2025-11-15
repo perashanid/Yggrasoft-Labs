@@ -29,15 +29,36 @@ export const BlogSection = () => {
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
+      const container = scrollContainerRef.current;
       const scrollAmount = 400;
-      const newScrollLeft = direction === 'left' 
-        ? scrollContainerRef.current.scrollLeft - scrollAmount
-        : scrollContainerRef.current.scrollLeft + scrollAmount;
       
-      scrollContainerRef.current.scrollTo({
-        left: newScrollLeft,
-        behavior: 'smooth'
-      });
+      if (direction === 'left') {
+        // If at the start, loop to the end
+        if (container.scrollLeft <= 0) {
+          container.scrollTo({
+            left: container.scrollWidth - container.clientWidth,
+            behavior: 'smooth'
+          });
+        } else {
+          container.scrollTo({
+            left: container.scrollLeft - scrollAmount,
+            behavior: 'smooth'
+          });
+        }
+      } else {
+        // If at the end, loop to the start
+        if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
+          container.scrollTo({
+            left: 0,
+            behavior: 'smooth'
+          });
+        } else {
+          container.scrollTo({
+            left: container.scrollLeft + scrollAmount,
+            behavior: 'smooth'
+          });
+        }
+      }
     }
   };
 
@@ -153,21 +174,21 @@ export const BlogSection = () => {
           </div>
         ) : (
           <div className="relative">
-            {/* Left Arrow */}
+            {/* Left Arrow - Minimal */}
             {showScrollButtons && (
               <button
                 onClick={() => scroll('left')}
-                className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-gold/90 hover:bg-gold text-background-primary p-3 rounded-full shadow-lg transition-all hover:scale-110 hidden md:block"
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 text-gold/60 hover:text-gold transition-colors hidden md:block"
                 aria-label="Scroll left"
               >
-                <FaChevronLeft size={20} />
+                <FaChevronLeft size={32} />
               </button>
             )}
 
             {/* Scrollable Container */}
             <div 
               ref={scrollContainerRef}
-              className="flex gap-8 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
+              className="flex gap-8 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-12"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               {blogs.map((blog, index) => (
@@ -177,14 +198,14 @@ export const BlogSection = () => {
               ))}
             </div>
 
-            {/* Right Arrow */}
+            {/* Right Arrow - Minimal */}
             {showScrollButtons && (
               <button
                 onClick={() => scroll('right')}
-                className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-gold/90 hover:bg-gold text-background-primary p-3 rounded-full shadow-lg transition-all hover:scale-110 hidden md:block"
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 text-gold/60 hover:text-gold transition-colors hidden md:block"
                 aria-label="Scroll right"
               >
-                <FaChevronRight size={20} />
+                <FaChevronRight size={32} />
               </button>
             )}
           </div>
