@@ -23,7 +23,7 @@ export const ProjectSection = () => {
   return (
     <section id="projects" className="relative py-24 overflow-hidden">
       {/* Atmospheric background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#1a1f2e]/70 via-[#0f1419]/50 to-[#1a1f2e]/70" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#1a1f2e]/20 via-[#0f1419]/10 to-[#1a1f2e]/20" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(140,114,49,0.05),transparent_70%)]" />
 
       <div className="container mx-auto px-6 relative z-10">
