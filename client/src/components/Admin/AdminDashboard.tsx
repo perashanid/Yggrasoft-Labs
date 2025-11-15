@@ -19,23 +19,33 @@ export const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0a0e1a]">
+    <div className="min-h-screen bg-background-primary relative">
+      {/* Tree background image */}
+      <div 
+        className="fixed inset-0 opacity-5 bg-cover bg-center bg-no-repeat pointer-events-none"
+        style={{ backgroundImage: "url('/assets/full picture with background.png')" }}
+      />
+      
       {/* Header */}
-      <header className="bg-[#1a1f2e] backdrop-blur-xl shadow-2xl border-b border-[#D4AF37]/20 sticky top-0 z-50">
+      <header className="bg-background-secondary/95 backdrop-blur-xl shadow-2xl border-b border-gold/20 sticky top-0 z-50 relative">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 bg-[#D4AF37] rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">Y</span>
+            <div className="w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden bg-background-primary border border-gold/30">
+              <img 
+                src="/assets/favicon.png" 
+                alt="Yggdrasil Logo" 
+                className="w-full h-full object-contain p-1"
+              />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-[#D4AF37] font-heading">Admin Dashboard</h1>
-              <p className="text-xs text-[#D4AF37]/70">Yggdrasil Management Portal</p>
+              <h1 className="text-2xl font-bold text-gold font-heading">Admin Dashboard</h1>
+              <p className="text-xs text-gold-light">Yggdrasil Management Portal</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
             <a
               href="/"
-              className="flex items-center gap-2 px-4 py-2 bg-[#20B2AA]/20 text-[#20B2AA] border border-[#20B2AA]/30 rounded-lg hover:bg-[#20B2AA]/30 transition-all"
+              className="flex items-center gap-2 px-4 py-2 bg-teal/20 text-teal border border-teal/30 rounded-lg hover:bg-teal/30 transition-all"
             >
               <FaHome />
               <span className="hidden sm:inline">Home</span>
@@ -52,7 +62,7 @@ export const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
       </header>
 
       {/* Navigation Tabs */}
-      <div className="bg-[#1a1f2e]/50 backdrop-blur-xl border-b border-[#D4AF37]/10 sticky top-[73px] z-40">
+      <div className="bg-background-secondary/80 backdrop-blur-xl border-b border-gold/10 sticky top-[73px] z-40 relative">
         <div className="max-w-7xl mx-auto px-4">
           <nav className="flex gap-2 overflow-x-auto">
             {tabs.map((tab) => {
@@ -65,8 +75,8 @@ export const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
                   whileTap={{ scale: 0.98 }}
                   className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all border-b-2 whitespace-nowrap ${
                     activeTab === tab.id
-                      ? 'text-[#D4AF37] border-[#D4AF37] bg-[#D4AF37]/5'
-                      : 'text-gray-400 border-transparent hover:text-[#D4AF37]/70 hover:bg-[#D4AF37]/5'
+                      ? 'text-gold border-gold bg-gold/10'
+                      : 'text-gray-400 border-transparent hover:text-gold-light hover:bg-gold/5'
                   }`}
                 >
                   <Icon />
@@ -79,7 +89,7 @@ export const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
       </div>
 
       {/* Content */}
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main className="max-w-7xl mx-auto px-4 py-8 relative">
         {activeTab === 'projects' && <ProjectManager />}
         {activeTab === 'reviews' && <ReviewManager />}
         {activeTab === 'blogs' && <BlogManager />}
