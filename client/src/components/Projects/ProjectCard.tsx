@@ -11,6 +11,7 @@ interface ProjectCardProps {
 
 export const ProjectCard = ({ project }: ProjectCardProps) => {
   const [showReviews, setShowReviews] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const hasReviews = project.reviews && project.reviews.length > 0;
 
   return (
@@ -19,14 +20,23 @@ export const ProjectCard = ({ project }: ProjectCardProps) => {
       className="group relative bg-background-secondary/80 backdrop-blur-sm rounded-lg overflow-hidden border border-gold/20 hover:border-gold/50 transition-all duration-300 hover:shadow-xl hover:shadow-gold/10 flex flex-col"
     >
       {/* Project Image */}
-      {project.imageUrl && (
-        <div className="relative h-48 overflow-hidden">
+      {project.imageUrl && !imageError ? (
+        <div className="relative h-48 overflow-hidden bg-background-primary">
           <img
             src={project.imageUrl}
             alt={project.title}
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+            onError={() => setImageError(true)}
+            loading="lazy"
+            crossOrigin="anonymous"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background-secondary to-transparent opacity-60" />
+        </div>
+      ) : (
+        <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gold/20 to-teal/20 flex items-center justify-center">
+          <div className="text-6xl text-gold/30">
+            {project.title.charAt(0)}
+          </div>
         </div>
       )}
 
