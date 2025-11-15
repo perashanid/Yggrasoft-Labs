@@ -108,12 +108,12 @@ export const ProjectSection = () => {
             where ideas take form and solutions come to life.
           </motion.p>
 
-          <div className="relative">
-            {/* Left Arrow - Minimal */}
+          <div className="relative flex items-center gap-4">
+            {/* Left Arrow - Outside */}
             {showScrollButtons && (
               <button
                 onClick={() => scroll('left')}
-                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 text-gold/60 hover:text-gold transition-colors hidden md:block"
+                className="flex-shrink-0 text-gold/60 hover:text-gold transition-colors hidden md:block"
                 aria-label="Scroll left"
               >
                 <FaChevronLeft size={32} />
@@ -123,7 +123,7 @@ export const ProjectSection = () => {
             {/* Scrollable Container */}
             <motion.div
               ref={scrollContainerRef}
-              className="flex gap-8 overflow-x-auto scrollbar-hide scroll-smooth pb-4 px-12"
+              className="flex-1 flex gap-8 overflow-x-auto scrollbar-hide scroll-smooth pb-4"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               variants={staggerContainer}
             >
@@ -134,11 +134,11 @@ export const ProjectSection = () => {
               ))}
             </motion.div>
 
-            {/* Right Arrow - Minimal */}
+            {/* Right Arrow - Outside */}
             {showScrollButtons && (
               <button
                 onClick={() => scroll('right')}
-                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 text-gold/60 hover:text-gold transition-colors hidden md:block"
+                className="flex-shrink-0 text-gold/60 hover:text-gold transition-colors hidden md:block"
                 aria-label="Scroll right"
               >
                 <FaChevronRight size={32} />
