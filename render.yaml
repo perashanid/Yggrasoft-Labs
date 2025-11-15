@@ -1,10 +1,10 @@
 services:
-  # Backend API Service
+  # Single Web Service - API + Frontend
   - type: web
-    name: yggdrasil-api
+    name: yggdrasil-app
     env: node
-    buildCommand: cd server && npm install && npm run build
-    startCommand: cd server && npm start
+    buildCommand: npm run build
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
@@ -23,16 +23,6 @@ services:
       - key: EMAIL_FROM
         sync: false
       - key: CORS_ORIGIN
-        sync: false
+        value: same-origin
       - key: PORT
         value: 10000
-
-  # Frontend Static Site
-  - type: web
-    name: yggdrasil-frontend
-    env: static
-    buildCommand: cd client && npm install && npm run build
-    staticPublishPath: ./client/dist
-    envVars:
-      - key: VITE_API_URL
-        sync: false
