@@ -11,6 +11,7 @@ export interface IProject extends Document {
   domainId?: mongoose.Types.ObjectId;
   order: number;
   isActive: boolean;
+  reviews?: mongoose.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -67,6 +68,10 @@ const projectSchema = new Schema<IProject>(
       type: Boolean,
       default: true,
     },
+    reviews: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Review',
+    }],
   },
   {
     timestamps: true,

@@ -7,6 +7,7 @@ export interface IReview extends Document {
   rating: number;
   review: string;
   avatar?: string;
+  projectId?: mongoose.Types.ObjectId;
   isActive: boolean;
   order: number;
   createdAt: Date;
@@ -44,6 +45,10 @@ const reviewSchema = new Schema<IReview>(
     avatar: {
       type: String,
       trim: true,
+    },
+    projectId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Project',
     },
     isActive: {
       type: Boolean,
