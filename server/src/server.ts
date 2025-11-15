@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+import path from 'path';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import { apiLimiter } from './middleware/rateLimiter';
 import connectDB from './config/database';
@@ -72,8 +73,19 @@ app.use('/api/reviews', reviewRoutes);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/analytics', analyticsRoutes);
 
-// 404 handler - must be after all routes
-app.use(notFoundHandler);
+// Serve static files from the React app in production
+if (process.env.NODE_ENV === 'production') {
+  const clientBuildPath = path.join(__dirname, '../../client/dist');
+  app.use(express.static(clientBuildPath));
+
+  // Handle React routing, return all requests to React app
+  app.get('*', (_req: Request, res: Response) => {
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+  });
+} else {
+  // 404 handler for development - only for API routes
+  app.use(notFoundHandler);
+}
 
 // Error handling middleware - must be last
 app.use(errorHandler);

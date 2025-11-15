@@ -17,23 +17,28 @@ export const TreeBackgroundWithRoots = ({ imagePath }: TreeBackgroundWithRootsPr
     }
   }, []);
 
-  // Calculate total scrollable height for the tree journey
-  const totalScrollHeight = typeof document !== 'undefined' 
-    ? document.documentElement.scrollHeight - window.innerHeight 
-    : 3000;
-
-  // Tree moves UP as you scroll DOWN, creating a camera pan effect from top to bottom
-  // Start showing the top of the tree (branches), end showing the bottom (roots)
-  const y = useTransform(
-    scrollY,
-    [heroHeight, totalScrollHeight],
-    [0, -1000] // Move tree image UP to reveal lower parts
-  );
+  // Tree starts appearing after hero and moves smoothly till the end
+  const y = useTransform(scrollY, (value) => {
+    // Don't move tree until after hero section
+    if (value < heroHeight) return 0;
+    
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollAfterHero = value - heroHeight;
+    const remainingScroll = maxScroll - heroHeight;
+    
+    if (remainingScroll <= 0) return 0;
+    
+    const scrollProgress = Math.min(scrollAfterHero / remainingScroll, 1);
+    
+    // Tree is 250vh tall, we need to move it up 150vh to show roots
+    const treeMovement = window.innerHeight * 1.5;
+    return -scrollProgress * treeMovement;
+  });
 
   // Fade in the tree as you leave the hero section
   const opacity = useTransform(
     scrollY,
-    [heroHeight * 0.7, heroHeight, totalScrollHeight * 0.9],
+    [heroHeight * 0.8, heroHeight, heroHeight + 200],
     [0, 0.7, 0.7]
   );
 

@@ -1,0 +1,28 @@
+services:
+  # Single Web Service - API + Frontend
+  - type: web
+    name: yggdrasil-app
+    env: node
+    buildCommand: npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: EMAIL_HOST
+        sync: false
+      - key: EMAIL_PORT
+        sync: false
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
+      - key: EMAIL_FROM
+        sync: false
+      - key: CORS_ORIGIN
+        value: same-origin
+      - key: PORT
+        value: 10000

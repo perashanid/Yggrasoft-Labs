@@ -52,8 +52,11 @@ Thumbs.db
 # MongoDB
 *.mongodb
 
+# Render
+.render/
 
 # Package manager lock files (optional - uncomment if needed)
 # package-lock.json
 # yarn.lock
 # pnpm-lock.yaml
+DEPLOYMENT.md
