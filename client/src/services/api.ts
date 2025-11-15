@@ -1,77 +1,84 @@
-import axios, { AxiosInstance, AxiosError } from 'axios';
-import { API_BASE_URL } from '../utils/constants';
-import type {
-  ApiResponse,
-  Domain,
-  ContactFormData,
-  NewsletterSubscription,
-  Settings,
-} from '../types';
+import axios from 'axios';
 
-// Create axios instance
-const apiClient: AxiosInstance = axios.create({
-  baseURL: API_BASE_URL,
+const api = axios.create({
+  baseURL: '/api',
   timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
-// Request interceptor
-apiClient.interceptors.request.use(
-  (config) => {
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
+// Simple in-memory cache
+const cache = new Map<string, { data: any; timestamp: number }>();
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
-// Response interceptor
-apiClient.interceptors.response.use(
+// Request interceptor for auth
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('adminToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+// Response interceptor for error handling
+api.interceptors.response.use(
   (response) => response,
-  (error: AxiosError) => {
-    if (error.response) {
-      console.error('API Error:', error.response.data);
-    } else if (error.request) {
-      console.error('Network Error:', error.message);
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('adminToken');
+      window.location.href = '/admin';
     }
     return Promise.reject(error);
   }
 );
 
+// Cached GET request
+export const cachedGet = async <T = any>(url: string, forceRefresh = false): Promise<T> => {
+  const cacheKey = url;
+  const cached = cache.get(cacheKey);
+  
+  if (!forceRefresh && cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+    return cached.data;
+  }
+  
+  const response = await api.get<T>(url);
+  cache.set(cacheKey, { data: response.data, timestamp: Date.now() });
+  
+  return response.data;
+};
+
+// Clear cache for specific pattern
+export const clearCache = (pattern?: string) => {
+  if (pattern) {
+    Array.from(cache.keys()).forEach((key) => {
+      if (key.includes(pattern)) {
+        cache.delete(key);
+      }
+    });
+  } else {
+    cache.clear();
+  }
+};
+
 // API Functions
-
-// Get all domains
-export const getDomains = async (): Promise<Domain[]> => {
-  const response = await apiClient.get<ApiResponse<Domain[]>>('/domains');
-  return response.data.data || [];
+export const getSettings = async () => {
+  return cachedGet('/settings');
 };
 
-// Get single domain
-export const getDomainById = async (id: string): Promise<Domain> => {
-  const response = await apiClient.get<ApiResponse<Domain>>(`/domains/${id}`);
-  return response.data.data!;
+export const getDomains = async () => {
+  return cachedGet('/domains');
 };
 
-// Submit contact form
-export const submitContact = async (data: ContactFormData): Promise<ApiResponse<any>> => {
-  const response = await apiClient.post<ApiResponse<any>>('/contacts', data);
+export const getProjects = async () => {
+  return cachedGet('/projects');
+};
+
+export const submitContact = async (data: any) => {
+  const response = await api.post('/contacts', data);
   return response.data;
 };
 
-// Subscribe to newsletter
-export const subscribeNewsletter = async (
-  data: NewsletterSubscription
-): Promise<ApiResponse<any>> => {
-  const response = await apiClient.post<ApiResponse<any>>('/newsletter/subscribe', data);
+export const subscribeNewsletter = async (email: string) => {
+  const response = await api.post('/newsletter/subscribe', { email });
   return response.data;
 };
 
-// Get site settings
-export const getSettings = async (): Promise<Settings> => {
-  const response = await apiClient.get<ApiResponse<Settings>>('/settings');
-  return response.data.data!;
-};
-
-export default apiClient;
+export default api;
