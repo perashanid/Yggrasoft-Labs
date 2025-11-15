@@ -1,54 +1,77 @@
 import { useState } from 'react';
-import { FaSignOutAlt, FaBlog, FaStar, FaChartLine } from 'react-icons/fa';
+import { FaSignOutAlt, FaBlog, FaStar, FaProjectDiagram, FaHome } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { ReviewManager } from './ReviewManager';
+import { BlogManager } from './BlogManager';
+import { ProjectManager } from './ProjectManager';
 
 interface AdminDashboardProps {
   onLogout: () => void;
 }
 
 export const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
-  const [activeTab, setActiveTab] = useState<'reviews' | 'blogs' | 'analytics'>('reviews');
+  const [activeTab, setActiveTab] = useState<'projects' | 'reviews' | 'blogs'>('projects');
 
   const tabs = [
+    { id: 'projects' as const, label: 'Projects', icon: FaProjectDiagram },
     { id: 'reviews' as const, label: 'Reviews', icon: FaStar },
     { id: 'blogs' as const, label: 'Blogs', icon: FaBlog },
-    { id: 'analytics' as const, label: 'Analytics', icon: FaChartLine },
   ];
 
   return (
-    <div className="min-h-screen bg-background-primary">
+    <div className="min-h-screen bg-[#0a0e1a]">
       {/* Header */}
-      <header className="bg-background-secondary shadow-lg">
+      <header className="bg-[#1a1f2e] backdrop-blur-xl shadow-2xl border-b border-[#D4AF37]/20 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-text-primary">Admin Dashboard</h1>
-          <button
-            onClick={onLogout}
-            className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
-          >
-            <FaSignOutAlt />
-            Logout
-          </button>
+          <div className="flex items-center gap-4">
+            <div className="w-10 h-10 bg-[#D4AF37] rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold text-xl">Y</span>
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-[#D4AF37] font-heading">Admin Dashboard</h1>
+              <p className="text-xs text-[#D4AF37]/70">Yggdrasil Management Portal</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <a
+              href="/"
+              className="flex items-center gap-2 px-4 py-2 bg-[#20B2AA]/20 text-[#20B2AA] border border-[#20B2AA]/30 rounded-lg hover:bg-[#20B2AA]/30 transition-all"
+            >
+              <FaHome />
+              <span className="hidden sm:inline">Home</span>
+            </a>
+            <button
+              onClick={onLogout}
+              className="flex items-center gap-2 px-4 py-2 bg-red-500/20 text-red-400 border border-red-500/30 rounded-lg hover:bg-red-500/30 transition-all"
+            >
+              <FaSignOutAlt />
+              <span className="hidden sm:inline">Logout</span>
+            </button>
+          </div>
         </div>
       </header>
 
       {/* Navigation Tabs */}
-      <div className="bg-background-secondary border-b border-gray-700">
+      <div className="bg-[#1a1f2e]/50 backdrop-blur-xl border-b border-[#D4AF37]/10 sticky top-[73px] z-40">
         <div className="max-w-7xl mx-auto px-4">
-          <nav className="flex gap-4">
+          <nav className="flex gap-2 overflow-x-auto">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
-                <button
+                <motion.button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-6 py-4 font-medium transition-colors border-b-2 ${
+                  whileHover={{ y: -2 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`flex items-center gap-2 px-6 py-4 font-semibold transition-all border-b-2 whitespace-nowrap ${
                     activeTab === tab.id
-                      ? 'text-accent-primary border-accent-primary'
-                      : 'text-text-secondary border-transparent hover:text-text-primary'
+                      ? 'text-[#D4AF37] border-[#D4AF37] bg-[#D4AF37]/5'
+                      : 'text-gray-400 border-transparent hover:text-[#D4AF37]/70 hover:bg-[#D4AF37]/5'
                   }`}
                 >
                   <Icon />
                   {tab.label}
-                </button>
+                </motion.button>
               );
             })}
           </nav>
@@ -57,24 +80,9 @@ export const AdminDashboard = ({ onLogout }: AdminDashboardProps) => {
 
       {/* Content */}
       <main className="max-w-7xl mx-auto px-4 py-8">
-        {activeTab === 'reviews' && (
-          <div className="text-text-primary">
-            <h2 className="text-2xl font-bold mb-4">Manage Reviews</h2>
-            <p className="text-text-secondary">Review management interface coming soon...</p>
-          </div>
-        )}
-        {activeTab === 'blogs' && (
-          <div className="text-text-primary">
-            <h2 className="text-2xl font-bold mb-4">Manage Blogs</h2>
-            <p className="text-text-secondary">Blog management interface coming soon...</p>
-          </div>
-        )}
-        {activeTab === 'analytics' && (
-          <div className="text-text-primary">
-            <h2 className="text-2xl font-bold mb-4">Analytics</h2>
-            <p className="text-text-secondary">Analytics dashboard coming soon...</p>
-          </div>
-        )}
+        {activeTab === 'projects' && <ProjectManager />}
+        {activeTab === 'reviews' && <ReviewManager />}
+        {activeTab === 'blogs' && <BlogManager />}
       </main>
     </div>
   );

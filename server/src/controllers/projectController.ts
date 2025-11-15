@@ -10,7 +10,12 @@ export const getProjects = async (
   try {
     const projects = await Project.find({ isActive: true })
       .sort({ featured: -1, order: 1 })
-      .populate('domainId', 'name slug');
+      .populate('domainId', 'name slug')
+      .populate({
+        path: 'reviews',
+        match: { isActive: true },
+        options: { sort: { order: 1 } },
+      });
 
     // Set cache headers
     res.set('Cache-Control', 'public, max-age=3600'); // Cache for 1 hour
@@ -31,7 +36,13 @@ export const getProjectById = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const project = await Project.findById(req.params.id).populate('domainId', 'name slug');
+    const project = await Project.findById(req.params.id)
+      .populate('domainId', 'name slug')
+      .populate({
+        path: 'reviews',
+        match: { isActive: true },
+        options: { sort: { order: 1 } },
+      });
 
     if (!project) {
       throw new AppError('Project not found', 404);
@@ -58,7 +69,13 @@ export const getProjectsByDomain = async (
     const projects = await Project.find({
       domainId: req.params.domainId,
       isActive: true,
-    }).sort({ featured: -1, order: 1 });
+    })
+      .sort({ featured: -1, order: 1 })
+      .populate({
+        path: 'reviews',
+        match: { isActive: true },
+        options: { sort: { order: 1 } },
+      });
 
     res.status(200).json({
       success: true,

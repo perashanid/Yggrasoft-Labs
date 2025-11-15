@@ -1,53 +1,68 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 interface TreeBackgroundWithRootsProps {
   imagePath: string;
 }
 
 export const TreeBackgroundWithRoots = ({ imagePath }: TreeBackgroundWithRootsProps) => {
-  const { scrollYProgress } = useScroll();
+  const [heroHeight, setHeroHeight] = useState(0);
+  const { scrollY } = useScroll();
 
-  // Subtle parallax effect - tree moves slightly slower than scroll
-  const y = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const opacity = useTransform(scrollYProgress, [0, 0.1, 0.9, 1], [0.5, 0.7, 0.7, 0.6]);
+  useEffect(() => {
+    // Get the hero section height
+    const heroElement = document.getElementById('hero');
+    if (heroElement) {
+      setHeroHeight(heroElement.offsetHeight);
+    }
+  }, []);
+
+  // Calculate total scrollable height for the tree journey
+  const totalScrollHeight = typeof document !== 'undefined' 
+    ? document.documentElement.scrollHeight - window.innerHeight 
+    : 3000;
+
+  // Tree moves UP as you scroll DOWN, creating a camera pan effect from top to bottom
+  // Start showing the top of the tree (branches), end showing the bottom (roots)
+  const y = useTransform(
+    scrollY,
+    [heroHeight, totalScrollHeight],
+    [0, -1000] // Move tree image UP to reveal lower parts
+  );
+
+  // Fade in the tree as you leave the hero section
+  const opacity = useTransform(
+    scrollY,
+    [heroHeight * 0.7, heroHeight, totalScrollHeight * 0.9],
+    [0, 0.7, 0.7]
+  );
 
   return (
     <>
-      {/* Absolute positioned tree that spans the entire content height */}
+      {/* Fixed positioned tree that stays in viewport but only visible after hero */}
       <div 
-        className="absolute top-0 left-0 right-0 bottom-0 pointer-events-none z-0 overflow-hidden"
-        style={{ minHeight: '100%' }}
+        className="fixed top-0 left-0 right-0 bottom-0 pointer-events-none z-0"
+        style={{ 
+          height: '100vh',
+        }}
       >
-        <motion.div
-          style={{ y, opacity }}
-          className="absolute inset-0 flex items-center justify-center"
-        >
-          {/* Tree image - positioned to span from top to bottom */}
-          <img
+        <div className="absolute inset-0 overflow-hidden flex items-start justify-center">
+          <motion.img
             src={imagePath}
             alt="Yggdrasil Tree"
-            className="absolute"
-            style={{
-              width: 'auto',
-              height: '100%',
-              minHeight: '100%',
-              maxWidth: '100vw',
-              objectFit: 'contain',
-              objectPosition: 'center center',
+            style={{ 
+              y, 
+              opacity,
               filter: 'drop-shadow(0 0 60px rgba(140, 114, 49, 0.4)) brightness(1.1)',
-              left: '50%',
-              transform: 'translateX(-50%)',
             }}
+            className="min-w-full w-auto h-[250vh] max-w-none object-cover"
           />
-        </motion.div>
+        </div>
 
-        {/* Gradient overlays for depth and blending */}
-        <div className="absolute inset-0 bg-gradient-to-b from-background-primary/60 via-background-primary/20 to-background-primary/50 pointer-events-none" />
-        <div className="absolute inset-0 bg-gradient-to-r from-background-primary/40 via-transparent to-background-primary/40 pointer-events-none" />
-
-
-
-
+        {/* Gradient overlays for depth and blending - reduced opacity */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background-primary/40 via-background-primary/10 to-background-primary/30 pointer-events-none" />
+        {/* Strong side gradients to hide black edges and blend with background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-background-primary via-transparent to-background-primary pointer-events-none" />
       </div>
     </>
   );

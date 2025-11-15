@@ -78,7 +78,7 @@ const projects = [
     description:
       'A comprehensive analytics platform leveraging artificial intelligence to provide real-time insights and predictive analytics for businesses. Features include automated data processing, machine learning models, and interactive dashboards that help organizations make data-driven decisions.',
     technologies: ['React', 'TypeScript', 'Python', 'TensorFlow', 'MongoDB'],
-    imageUrl: '/projects/ai-analytics.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&auto=format&fit=crop',
     githubUrl: 'https://github.com/yggrasoft-labs/ai-analytics',
     liveUrl: 'https://analytics.yggrasoft.com',
     featured: true,
@@ -90,7 +90,7 @@ const projects = [
     description:
       'An IoT-enabled farm management solution that monitors soil conditions, weather patterns, and crop health in real-time. Farmers can optimize irrigation, predict harvest times, and reduce resource waste through intelligent automation and data-driven recommendations.',
     technologies: ['Node.js', 'React Native', 'IoT', 'PostgreSQL', 'AWS'],
-    imageUrl: '/projects/smart-farm.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&auto=format&fit=crop',
     githubUrl: 'https://github.com/yggrasoft-labs/smart-farm',
     featured: true,
     order: 2,
@@ -101,7 +101,7 @@ const projects = [
     description:
       'A secure and transparent trading platform built on blockchain technology. Enables peer-to-peer trading with smart contracts, real-time market data, and advanced risk management tools. Features include automated trading bots and portfolio analytics.',
     technologies: ['Solidity', 'Web3.js', 'React', 'Node.js', 'Ethereum'],
-    imageUrl: '/projects/blockchain-trading.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&auto=format&fit=crop',
     githubUrl: 'https://github.com/yggrasoft-labs/blockchain-trading',
     liveUrl: 'https://trade.yggrasoft.com',
     featured: true,
@@ -113,7 +113,7 @@ const projects = [
     description:
       'A comprehensive healthcare platform connecting patients with medical professionals through secure video consultations, digital prescriptions, and health record management. Includes appointment scheduling, payment processing, and integration with medical devices.',
     technologies: ['Vue.js', 'Django', 'WebRTC', 'PostgreSQL', 'Docker'],
-    imageUrl: '/projects/telemedicine.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&auto=format&fit=crop',
     githubUrl: 'https://github.com/yggrasoft-labs/telemedicine',
     featured: false,
     order: 4,
@@ -124,7 +124,7 @@ const projects = [
     description:
       'An interactive learning platform with course creation tools, video streaming, assessments, and progress tracking. Supports multiple learning formats including live classes, recorded lectures, and interactive quizzes with AI-powered personalized learning paths.',
     technologies: ['Angular', 'Spring Boot', 'MySQL', 'Redis', 'Kubernetes'],
-    imageUrl: '/projects/elearning.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&auto=format&fit=crop',
     githubUrl: 'https://github.com/yggrasoft-labs/elearning',
     liveUrl: 'https://learn.yggrasoft.com',
     featured: false,
@@ -136,7 +136,7 @@ const projects = [
     description:
       'An intelligent job matching system using machine learning to connect job seekers with opportunities based on skills, experience, and career goals. Features include resume parsing, skill gap analysis, and personalized job recommendations.',
     technologies: ['Python', 'FastAPI', 'React', 'NLP', 'MongoDB'],
-    imageUrl: '/projects/job-matching.jpg',
+    imageUrl: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&auto=format&fit=crop',
     githubUrl: 'https://github.com/yggrasoft-labs/job-matching',
     featured: false,
     order: 6,
@@ -157,14 +157,15 @@ const settings = {
   },
 };
 
-const reviews = [
+// General reviews (not project-specific)
+const generalReviews = [
   {
     name: 'Sarah Johnson',
     role: 'CTO',
     company: 'TechVentures Inc',
     rating: 5,
     review: 'Yggrasoft Labs delivered an exceptional AI analytics platform that transformed our business intelligence capabilities. Their technical expertise and commitment to quality are unmatched.',
-    avatar: '',
+    avatar: 'https://i.pravatar.cc/150?img=5',
     isActive: true,
     order: 1,
   },
@@ -174,7 +175,7 @@ const reviews = [
     company: 'Green Valley Farms',
     rating: 5,
     review: 'The smart farm management system has revolutionized how we operate. We\'ve seen a 40% increase in efficiency and significant cost savings. Highly recommended!',
-    avatar: '',
+    avatar: 'https://i.pravatar.cc/150?img=12',
     isActive: true,
     order: 2,
   },
@@ -184,7 +185,7 @@ const reviews = [
     company: 'HealthFirst Clinic',
     rating: 5,
     review: 'The telemedicine platform has made healthcare more accessible to our patients. The system is intuitive, secure, and has greatly improved our service delivery.',
-    avatar: '',
+    avatar: 'https://i.pravatar.cc/150?img=9',
     isActive: true,
     order: 3,
   },
@@ -194,9 +195,222 @@ const reviews = [
     company: 'Capital Growth Partners',
     rating: 5,
     review: 'Their blockchain trading platform provides the security and transparency we need. The real-time analytics and automated features have given us a competitive edge.',
-    avatar: '',
+    avatar: 'https://i.pravatar.cc/150?img=33',
     isActive: true,
     order: 4,
+  },
+];
+
+// Project-specific reviews
+const projectReviews = [
+  // AI-Powered Analytics Platform reviews
+  {
+    name: 'Jennifer Martinez',
+    role: 'Data Science Lead',
+    company: 'DataCorp Solutions',
+    rating: 5,
+    review: 'The AI analytics platform exceeded our expectations. The predictive models are incredibly accurate, and the dashboard interface makes complex data accessible to our entire team.',
+    avatar: 'https://i.pravatar.cc/150?img=10',
+    isActive: true,
+    order: 1,
+    projectTitle: 'AI-Powered Analytics Platform',
+  },
+  {
+    name: 'Robert Kim',
+    role: 'VP of Operations',
+    company: 'Global Insights Inc',
+    rating: 5,
+    review: 'Implementation was seamless, and the ROI was evident within the first quarter. The real-time insights have transformed our decision-making process.',
+    avatar: 'https://i.pravatar.cc/150?img=14',
+    isActive: true,
+    order: 2,
+    projectTitle: 'AI-Powered Analytics Platform',
+  },
+  {
+    name: 'Amanda Foster',
+    role: 'Business Analyst',
+    company: 'TechVentures Inc',
+    rating: 4,
+    review: 'Powerful analytics capabilities with an intuitive interface. The machine learning models have helped us identify trends we would have missed otherwise.',
+    avatar: 'https://i.pravatar.cc/150?img=20',
+    isActive: true,
+    order: 3,
+    projectTitle: 'AI-Powered Analytics Platform',
+  },
+  
+  // Smart Farm Management System reviews
+  {
+    name: 'Carlos Rodriguez',
+    role: 'Agricultural Manager',
+    company: 'Sunrise Farms',
+    rating: 5,
+    review: 'This system has completely transformed our farming operations. The IoT sensors provide real-time data that helps us optimize irrigation and reduce water waste by 35%.',
+    avatar: 'https://i.pravatar.cc/150?img=15',
+    isActive: true,
+    order: 1,
+    projectTitle: 'Smart Farm Management System',
+  },
+  {
+    name: 'Lisa Wang',
+    role: 'Farm Operations Director',
+    company: 'Green Valley Farms',
+    rating: 5,
+    review: 'The predictive analytics for crop health have been a game-changer. We can now address issues before they become problems, resulting in higher yields and better quality produce.',
+    avatar: 'https://i.pravatar.cc/150?img=47',
+    isActive: true,
+    order: 2,
+    projectTitle: 'Smart Farm Management System',
+  },
+  {
+    name: 'James Patterson',
+    role: 'Sustainability Coordinator',
+    company: 'EcoFarm Collective',
+    rating: 5,
+    review: 'Not only has this improved our efficiency, but it has also helped us meet our sustainability goals. The resource optimization features are outstanding.',
+    avatar: 'https://i.pravatar.cc/150?img=52',
+    isActive: true,
+    order: 3,
+    projectTitle: 'Smart Farm Management System',
+  },
+  
+  // Blockchain Trading Platform reviews
+  {
+    name: 'Alexander Petrov',
+    role: 'Chief Trading Officer',
+    company: 'Quantum Capital',
+    rating: 5,
+    review: 'The security and transparency of this blockchain platform are unparalleled. Smart contracts execute flawlessly, and the audit trail gives us complete confidence.',
+    avatar: 'https://i.pravatar.cc/150?img=59',
+    isActive: true,
+    order: 1,
+    projectTitle: 'Blockchain Trading Platform',
+  },
+  {
+    name: 'Sophia Chen',
+    role: 'Portfolio Manager',
+    company: 'Capital Growth Partners',
+    rating: 5,
+    review: 'The automated trading bots have significantly improved our trading efficiency. The platform handles high-frequency trading with zero downtime.',
+    avatar: 'https://i.pravatar.cc/150?img=44',
+    isActive: true,
+    order: 2,
+    projectTitle: 'Blockchain Trading Platform',
+  },
+  {
+    name: 'Marcus Johnson',
+    role: 'Risk Analyst',
+    company: 'SecureInvest Group',
+    rating: 4,
+    review: 'Excellent risk management tools and real-time analytics. The platform has helped us minimize exposure while maximizing returns.',
+    avatar: 'https://i.pravatar.cc/150?img=68',
+    isActive: true,
+    order: 3,
+    projectTitle: 'Blockchain Trading Platform',
+  },
+  
+  // Telemedicine Platform reviews
+  {
+    name: 'Dr. Rachel Green',
+    role: 'Chief Medical Officer',
+    company: 'HealthFirst Clinic',
+    rating: 5,
+    review: 'This platform has revolutionized how we deliver care. Video consultations are crystal clear, and the integrated health records make patient care seamless.',
+    avatar: 'https://i.pravatar.cc/150?img=32',
+    isActive: true,
+    order: 1,
+    projectTitle: 'Telemedicine Platform',
+  },
+  {
+    name: 'Dr. Michael Torres',
+    role: 'Telemedicine Director',
+    company: 'CareConnect Health',
+    rating: 5,
+    review: 'Patient satisfaction has increased by 45% since implementing this platform. The appointment scheduling and prescription management features are excellent.',
+    avatar: 'https://i.pravatar.cc/150?img=60',
+    isActive: true,
+    order: 2,
+    projectTitle: 'Telemedicine Platform',
+  },
+  {
+    name: 'Nurse Sarah Williams',
+    role: 'Head Nurse',
+    company: 'Virtual Care Solutions',
+    rating: 5,
+    review: 'Easy to use for both staff and patients. The integration with medical devices allows us to monitor patients remotely with confidence.',
+    avatar: 'https://i.pravatar.cc/150?img=48',
+    isActive: true,
+    order: 3,
+    projectTitle: 'Telemedicine Platform',
+  },
+  
+  // E-Learning Management System reviews
+  {
+    name: 'Professor David Lee',
+    role: 'Dean of Online Education',
+    company: 'Global University',
+    rating: 5,
+    review: 'The most comprehensive e-learning platform we\'ve used. The AI-powered personalized learning paths have improved student outcomes significantly.',
+    avatar: 'https://i.pravatar.cc/150?img=13',
+    isActive: true,
+    order: 1,
+    projectTitle: 'E-Learning Management System',
+  },
+  {
+    name: 'Emma Thompson',
+    role: 'Education Technology Specialist',
+    company: 'LearnTech Academy',
+    rating: 5,
+    review: 'Course creation tools are intuitive, and the analytics help us understand student engagement. The live class feature works flawlessly even with 500+ participants.',
+    avatar: 'https://i.pravatar.cc/150?img=45',
+    isActive: true,
+    order: 2,
+    projectTitle: 'E-Learning Management System',
+  },
+  {
+    name: 'Dr. Kevin Brown',
+    role: 'Curriculum Director',
+    company: 'Future Skills Institute',
+    rating: 4,
+    review: 'Excellent platform with robust features. The assessment tools and progress tracking have made it easier to ensure learning objectives are met.',
+    avatar: 'https://i.pravatar.cc/150?img=56',
+    isActive: true,
+    order: 3,
+    projectTitle: 'E-Learning Management System',
+  },
+  
+  // Job Matching AI Engine reviews
+  {
+    name: 'Rebecca Martinez',
+    role: 'HR Director',
+    company: 'TalentFirst Corp',
+    rating: 5,
+    review: 'This AI engine has reduced our time-to-hire by 60%. The skill matching is incredibly accurate, and candidates are much better aligned with our needs.',
+    avatar: 'https://i.pravatar.cc/150?img=27',
+    isActive: true,
+    order: 1,
+    projectTitle: 'Job Matching AI Engine',
+  },
+  {
+    name: 'Thomas Anderson',
+    role: 'Recruitment Manager',
+    company: 'CareerPath Solutions',
+    rating: 5,
+    review: 'The resume parsing and skill gap analysis features are outstanding. We\'ve seen a 40% improvement in candidate quality since implementation.',
+    avatar: 'https://i.pravatar.cc/150?img=51',
+    isActive: true,
+    order: 2,
+    projectTitle: 'Job Matching AI Engine',
+  },
+  {
+    name: 'Linda Chen',
+    role: 'Talent Acquisition Lead',
+    company: 'NextGen Careers',
+    rating: 5,
+    review: 'Personalized job recommendations have increased candidate engagement dramatically. The platform understands nuances that traditional systems miss.',
+    avatar: 'https://i.pravatar.cc/150?img=49',
+    isActive: true,
+    order: 3,
+    projectTitle: 'Job Matching AI Engine',
   },
 ];
 
@@ -269,16 +483,35 @@ const seedDatabase = async () => {
     console.log('✅ Seeded domains');
 
     // Insert projects
-    await Project.insertMany(projects);
+    const createdProjects = await Project.insertMany(projects);
     console.log('✅ Seeded projects');
 
     // Insert settings
     await Settings.create(settings);
     console.log('✅ Seeded settings');
 
-    // Insert reviews
-    await Review.insertMany(reviews);
-    console.log('✅ Seeded reviews');
+    // Insert general reviews
+    await Review.insertMany(generalReviews);
+    console.log('✅ Seeded general reviews');
+
+    // Insert project-specific reviews and link them to projects
+    for (const reviewData of projectReviews) {
+      const { projectTitle, ...reviewFields } = reviewData;
+      const project = createdProjects.find(p => p.title === projectTitle);
+      
+      if (project) {
+        const review = await Review.create({
+          ...reviewFields,
+          projectId: project._id,
+        });
+        
+        // Add review to project's reviews array
+        await Project.findByIdAndUpdate(project._id, {
+          $push: { reviews: review._id },
+        });
+      }
+    }
+    console.log('✅ Seeded project reviews and linked to projects');
 
     // Insert blogs
     await Blog.insertMany(blogs);

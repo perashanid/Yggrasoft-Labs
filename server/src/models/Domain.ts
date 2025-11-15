@@ -60,7 +60,6 @@ const domainSchema = new Schema<IDomain>(
 );
 
 // Indexes for faster queries
-domainSchema.index({ slug: 1 });
 domainSchema.index({ isActive: 1, order: 1 });
 
 export default mongoose.model<IDomain>('Domain', domainSchema);

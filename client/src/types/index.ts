@@ -20,6 +20,22 @@ export interface Domain {
   updatedAt: string;
 }
 
+// Review Types
+export interface Review {
+  _id: string;
+  name: string;
+  role: string;
+  company?: string;
+  rating: number;
+  review: string;
+  avatar?: string;
+  projectId?: string;
+  isActive: boolean;
+  order: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 // Project Types
 export interface Project {
   _id: string;
@@ -33,6 +49,7 @@ export interface Project {
   domainId?: string;
   order?: number;
   isActive?: boolean;
+  reviews?: Review[];
   createdAt?: string;
   updatedAt?: string;
 }

@@ -28,9 +28,9 @@ function App() {
         <Hero />
         
         {/* Tree background starts after Hero and extends through Footer */}
+        <TreeBackgroundWithRoots imagePath="/yggdrasil-tree.png" />
+        
         <div className="relative">
-          <TreeBackgroundWithRoots imagePath="/yggdrasil-tree.png" />
-          
           <main className="relative z-10">
             <Suspense fallback={<PageLoader />}>
               <AboutSection />

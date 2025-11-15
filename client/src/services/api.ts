@@ -64,11 +64,13 @@ export const getSettings = async () => {
 };
 
 export const getDomains = async () => {
-  return cachedGet('/domains');
+  const response = await cachedGet<{ success: boolean; count: number; data: any[] }>('/domains');
+  return response.data;
 };
 
 export const getProjects = async () => {
-  return cachedGet('/projects');
+  const response = await cachedGet<{ success: boolean; count: number; data: any[] }>('/projects');
+  return response.data;
 };
 
 export const submitContact = async (data: any) => {

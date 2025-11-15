@@ -50,8 +50,12 @@ export const BlogSection = () => {
   );
 
   return (
-    <section ref={ref} className="py-20 px-4 bg-background-primary" id="blog">
-      <div className="max-w-7xl mx-auto">
+    <section ref={ref} className="relative py-20 px-4 overflow-hidden" id="blog">
+      {/* Subtle atmospheric background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#1a1f2e]/20 via-[#0f1419]/10 to-[#1a1f2e]/20" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(140,114,49,0.05),transparent_70%)]" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}

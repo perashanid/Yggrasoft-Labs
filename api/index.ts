@@ -3,18 +3,36 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
-import { errorHandler, notFoundHandler } from './middleware/errorHandler';
-import { apiLimiter } from './middleware/rateLimiter';
-import connectDB from './config/database';
+import { errorHandler, notFoundHandler } from '../server/src/middleware/errorHandler';
+import { apiLimiter } from '../server/src/middleware/rateLimiter';
+import connectDB from '../server/src/config/database';
+
+// Import routes
+import contactRoutes from '../server/src/routes/contactRoutes';
+import domainRoutes from '../server/src/routes/domainRoutes';
+import projectRoutes from '../server/src/routes/projectRoutes';
+import newsletterRoutes from '../server/src/routes/newsletterRoutes';
+import settingsRoutes from '../server/src/routes/settingsRoutes';
+import authRoutes from '../server/src/routes/authRoutes';
+import reviewRoutes from '../server/src/routes/reviewRoutes';
+import blogRoutes from '../server/src/routes/blogRoutes';
+import analyticsRoutes from '../server/src/routes/analyticsRoutes';
 
 // Load environment variables
 dotenv.config();
 
-// Connect to MongoDB
-connectDB();
+// Connect to MongoDB (cached connection for serverless)
+let cachedDb: any = null;
+
+async function connectToDatabase() {
+  if (cachedDb) {
+    return cachedDb;
+  }
+  cachedDb = await connectDB();
+  return cachedDb;
+}
 
 const app: Application = express();
-const PORT = process.env.PORT || 5000;
 
 // Security middleware with custom CSP to allow external images
 app.use(helmet({
@@ -31,12 +49,12 @@ app.use(helmet({
 
 // CORS configuration
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  origin: process.env.CORS_ORIGIN || '*',
   credentials: true,
 }));
 
 // Logging middleware
-app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
+app.use(morgan('combined'));
 
 // Body parser middleware
 app.use(express.json({ limit: '10mb' }));
@@ -44,17 +62,6 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Rate limiting middleware
 app.use('/api/', apiLimiter);
-
-// Import routes
-import contactRoutes from './routes/contactRoutes';
-import domainRoutes from './routes/domainRoutes';
-import projectRoutes from './routes/projectRoutes';
-import newsletterRoutes from './routes/newsletterRoutes';
-import settingsRoutes from './routes/settingsRoutes';
-import authRoutes from './routes/authRoutes';
-import reviewRoutes from './routes/reviewRoutes';
-import blogRoutes from './routes/blogRoutes';
-import analyticsRoutes from './routes/analyticsRoutes';
 
 // Health check route
 app.get('/api/health', (_req: Request, res: Response) => {
@@ -72,16 +79,16 @@ app.use('/api/reviews', reviewRoutes);
 app.use('/api/blogs', blogRoutes);
 app.use('/api/analytics', analyticsRoutes);
 
-// 404 handler - must be after all routes
+// 404 handler
 app.use(notFoundHandler);
 
-// Error handling middleware - must be last
+// Error handling middleware
 app.use(errorHandler);
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`🌳 Yggdrasil server running on port ${PORT}`);
-  console.log(`📡 Environment: ${process.env.NODE_ENV || 'development'}`);
+// Connect to database before handling requests
+app.use(async (_req, _res, next) => {
+  await connectToDatabase();
+  next();
 });
 
 export default app;

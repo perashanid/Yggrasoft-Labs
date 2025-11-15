@@ -39,8 +39,9 @@ export const ReviewSection = () => {
 
   if (loading) {
     return (
-      <section className="py-20 px-4 bg-background-primary">
-        <div className="max-w-6xl mx-auto">
+      <section className="relative py-20 px-4 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#1a1f2e]/20 via-[#0f1419]/10 to-[#1a1f2e]/20" />
+        <div className="max-w-6xl mx-auto relative z-10">
           <h2 className="text-4xl font-bold text-center text-text-primary mb-12">
             What Our Clients Say
           </h2>
@@ -55,8 +56,12 @@ export const ReviewSection = () => {
   }
 
   return (
-    <section ref={ref} className="py-20 px-4 bg-background-primary" id="reviews">
-      <div className="max-w-6xl mx-auto">
+    <section ref={ref} className="relative py-20 px-4 overflow-hidden" id="reviews">
+      {/* Subtle atmospheric background to maintain readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#1a1f2e]/20 via-[#0f1419]/10 to-[#1a1f2e]/20" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(140,114,49,0.05),transparent_70%)]" />
+      
+      <div className="max-w-6xl mx-auto relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
